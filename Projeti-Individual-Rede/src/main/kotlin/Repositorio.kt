@@ -17,8 +17,8 @@ class Repositorio {
 
     fun iniciar() {
         jdbcTemplate = Conexao.jdbcTemplate!!
-
     }
+
 
     fun validarColaborador() {
 

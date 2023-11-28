@@ -1,4 +1,5 @@
 import java.io.File
+import java.io.IOException
 import javax.swing.JOptionPane
 
 object codigoPy {
@@ -27,6 +28,7 @@ import datetime
 import time
 import psutil
 from mysql.connector import connect
+import pyodbc
 
 # Função para obter a conexão com o banco de dados
 def mysql_connection(host, user, passwd, database=None):
@@ -38,10 +40,31 @@ def mysql_connection(host, user, passwd, database=None):
     )
     return connection
 
+def sql_server_connection(server, database, username, password):
+    conn_str = f'DRIVER={{SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
+    connection = pyodbc.connect(conn_str)
+    return connection
+
+
+
 # Conectar ao banco de dados
 connection = mysql_connection('localhost', 'root', 'Pedroca12@', 'SecurityBank')
 
+sql_server_connection = sql_server_connection('34.206.192.7', 'SecurityBank', 'sa', 'UrubuDoGit123')
+
+
+
+
+
 print("\nIniciando Seu Monitoramento...\r\n")
+
+
+def insert_data(connection, query, values):
+    cursor = connection.cursor()
+    cursor.execute(query, values)
+    connection.commit()
+
+
 
 # Função para medir a velocidade da Internet
 def get_speed():
@@ -94,10 +117,19 @@ while True:
         INSERT INTO Rede(ip, status, PotenciaUpload, PotenciaDownload, Ping, dtHora, fkServidor, fkBanco, fkEspecificacoes, fkPlano)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
     '''
+    queryServer = '''
+        INSERT INTO Rede(ip, status, PotenciaUpload, PotenciaDownload, Ping, dtHora, fkServidor, fkBanco, fkEspecificacoes, fkPlano)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    '''
+
+
 
     # Valores para inserção
-    insert_values = (network_ip, status, upload, download, ping, current_time, 1, 1, 1, 1)
-
+    insert_values = (network_ip, status, upload, download, ping, current_time, $fkServidor, $fkBanco, $fkEspicificacao, $fkPlano)
+    
+    insert_values_sql_server = (network_ip, status, upload, download, ping, current_time, $fkServidor, $fkBanco, $fkEspicificacao, $fkPlano)
+    insert_data(sql_server_connection, queryServer, insert_values_sql_server)
+    
     # Criar cursor
     cursor = connection.cursor()
 
@@ -105,54 +137,84 @@ while True:
     cursor.execute(query, insert_values)
     connection.commit()
 
-    cursor.execute("SELECT LAST_INSERT_ID();")
-    last_id_rede = cursor.fetchone()[0]
-
     if ping > 10:
         alert_query = '''
             INSERT INTO alertaRede(componente, data, hora, status, fkRede)
-            VALUES (%s, %s, %s, %s, %s);
+            VALUES (%s, %s, %s, %s, 45);
         '''
-        alert_values = ('Ping', datetime.datetime.now().strftime('%Y-%m-%d'), datetime.datetime.now().strftime('%H:%M:%S'), 'Ping Critico', last_id_rede)
+        alert_values = ('Ping', datetime.datetime.now().strftime('%Y-%m-%d'), datetime.datetime.now().strftime('%H:%M:%S'), 'Ping Critico',)
         cursor.execute(alert_query, alert_values)
         connection.commit()
+
+        alert_queryAWS = '''
+            INSERT INTO alertaRede(componente, data, hora, status, fkRede)
+            VALUES (?,?, ?, ?, 45);
+        '''
+        alert_valuesAWS = ('Ping', datetime.datetime.now().strftime('%Y-%m-%d'), datetime.datetime.now().strftime('%H:%M:%S'), 'Ping Critico')
+        
+        insert_data(sql_server_connection, alert_queryAWS, alert_valuesAWS)
+
+        
         print("Alerta de Ping inserido na tabela alertaRede!")
 
     # Verificar download menor que 200
     if download < 200:
         alert_query = '''
             INSERT INTO alertaRede(componente, data, hora, status, fkRede)
-            VALUES (%s, %s, %s, %s, %s);
+            VALUES (%s, %s, %s, %s, 45);
         '''
-        alert_values = ('Download', datetime.datetime.now().strftime('%Y-%m-%d'), datetime.datetime.now().strftime('%H:%M:%S'), 'Download Critico', last_id_rede)
+        alert_values = ('Download', datetime.datetime.now().strftime('%Y-%m-%d'), datetime.datetime.now().strftime('%H:%M:%S'), 'Download Critico')
         cursor.execute(alert_query, alert_values)
         connection.commit()
         print("Alerta de Download inserido na tabela alertaRede!")
+
+
+        alert_queryAWS = '''
+            INSERT INTO alertaRede(componente, data, hora, status, fkRede)
+            VALUES (?, ?, ?, ?,45);
+        '''
+
+        insert_data(sql_server_connection, alert_queryAWS, alert_values)
+
+
+        
 
     # Verificar upload menor que 200
     if upload < 200:
         alert_query = '''
             INSERT INTO alertaRede(componente, data, hora, status, fkRede)
-            VALUES (%s, %s, %s, %s, %s);
+            VALUES (%s, %s, %s, %s, 45);
         '''
-        alert_values = ('Upload', datetime.datetime.now().strftime('%Y-%m-%d'), datetime.datetime.now().strftime('%H:%M:%S'), 'Upload Critico', last_id_rede)
+        alert_values = ('Upload', datetime.datetime.now().strftime('%Y-%m-%d'), datetime.datetime.now().strftime('%H:%M:%S'), 'Upload Critico')
         cursor.execute(alert_query, alert_values)
         connection.commit()
         print("Alerta de Upload inserido na tabela alertaRede!")
+
+        alert_queryAWS = '''
+            INSERT INTO alertaRede(componente, data, hora, status, fkRede)
+            VALUES (?, ?, ?, ?,45);
+        '''
+        insert_data(sql_server_connection, alert_queryAWS, alert_values)
 
     # Verificar status igual a 0
     if status == 0:
         alert_query = '''
             INSERT INTO alertaRede(componente, data, hora, status, fkRede)
-            VALUES (%s, %s, %s, %s, %s);
+            VALUES (%s, %s, %s, %s, 45);
         '''
-        alert_values = ('Status', datetime.datetime.now().strftime('%Y-%m-%d'), datetime.datetime.now().strftime('%H:%M:%S'), 'Rede Desconectada', last_id_rede)
+        alert_values = ('Status', datetime.datetime.now().strftime('%Y-%m-%d'), datetime.datetime.now().strftime('%H:%M:%S'), 'Rede Desconectada')
         cursor.execute(alert_query, alert_values)
         connection.commit()
         print("Alerta de Status igual a 0 inserido na tabela alertaRede!")
 
 
+        alert_queryAWS = '''
+            INSERT INTO alertaRede(componente, data, hora, status, fkRede)
+            VALUES (?, ?, ?, ?,45);
+        '''
 
+
+        insert_data(sql_server_connection, alert_queryAWS, alert_values)
 
 
     
@@ -165,10 +227,16 @@ while True:
 
     time.sleep(5)
 
- """
-        val nomeArquivo = "CaptacaoRedePedro.py"
+ """.trimIndent()
+        val nomeArquivo = "captacaoIndividual.py"
 
-        File(nomeArquivo).writeText(codigo)
-        Runtime.getRuntime().exec("py $nomeArquivo")
+        try {
+            File(nomeArquivo).writeText(codigo) // Escrever o código Python em um arquivo
+            val process = Runtime.getRuntime().exec("python $nomeArquivo") // Executar o código Python
+            process.waitFor() // Aguardar a execução terminar
+            println("Execução concluída.")
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
     }
 }
