@@ -232,7 +232,7 @@ while True:
 
 
             File(nomeArquivo).writeText(codigo) // Escrever o código Python em um arquivo
-            val pythonPath = "/usr/bin/python3" // Example path, replace with your Python executable path
+    //        val pythonPath = "/usr/bin/python3" // Example path, replace with your Python executable path
             Runtime.getRuntime().exec("sudo su").waitFor()
             val process = Runtime.getRuntime().exec("python3 $nomeArquivo")
             process.waitFor() // Aguardar a execução terminar
