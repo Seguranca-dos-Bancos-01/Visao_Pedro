@@ -232,7 +232,9 @@ while True:
 
         try {
             File(nomeArquivo).writeText(codigo) // Escrever o código Python em um arquivo
-            val process = Runtime.getRuntime().exec("python3 $nomeArquivo") // Executar o código Python
+            val pythonPath = "/usr/bin/python3" // Example path, replace with your Python executable path
+            val process = Runtime.getRuntime().exec("$pythonPath $nomeArquivo")
+
             process.waitFor() // Aguardar a execução terminar
             println("Execução concluída.")
         } catch (e: IOException) {
