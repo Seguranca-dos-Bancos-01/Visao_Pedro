@@ -101,9 +101,9 @@ while True:
 
 
     # Valores para inserção
-    insert_values = (network_ip, status, upload, download, ping, current_time, 1, 1, 1, 1)
+    insert_values = (network_ip, status, upload, download, ping, current_time, 0, 0, 0, 0)
     
-    insert_values_sql_server = (network_ip, status, upload, download, ping, current_time, 1, 1, 1, 1)
+    insert_values_sql_server = (network_ip, status, upload, download, ping, current_time, 0, 0, 0, 0)
     insert_data(sql_server_connection, queryServer, insert_values_sql_server)
     
     # Criar cursor
