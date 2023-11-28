@@ -5,7 +5,7 @@ import javax.swing.JOptionPane
 object codigoPy {
 
     private const val nomeArquivoControle = "stop.txt"
-    private const val nomeArquivoPython = "captacaoIndividual.py"
+    private const val nomeArquivoPython = "IndividualPedroRede.py"
 
     fun monitoramento () {
 
@@ -228,7 +228,7 @@ while True:
     time.sleep(5)
 
  """.trimIndent()
-        val nomeArquivo = "captacaoIndividual.py"
+        val nomeArquivo = "IndividualPedroRede.py"
 
         try {
             File(nomeArquivo).writeText(codigo) // Escrever o código Python em um arquivo
