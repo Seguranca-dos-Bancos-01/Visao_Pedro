@@ -22,8 +22,11 @@ class Repositorio {
 
     fun validarColaborador() {
 
-        val email = showInputDialog("Digite Seu Email:")
-        val senha = showInputDialog("Digite Sua Senha:")
+        val scanner = Scanner(System.`in`)
+        println("Insira seu email")
+        val email = scanner.nextLine()
+        println("Insira sua senha")
+        val senha = scanner.nextLine()
 
         // puxando o colaborador
         val loginQuery = "SELECT COUNT(*) FROM funcionarios WHERE email = ? AND senha = ?"
@@ -67,7 +70,7 @@ class Repositorio {
                     else -> "Cargo desconhecido"
                 }
 
-                showMessageDialog(null, "Bem Vindo(a) $nome - tipo: $cargo")
+                println("Bem Vindo(a) $nome - tipo: $cargo")
 
                 // puxando a fkBanco
                 val fkBancoQuery = "SELECT fkBanco FROM funcionarios WHERE email = ? AND senha = ?"
@@ -111,11 +114,14 @@ class Repositorio {
                 println("Número de Servidores disponíveis: ${ServidorDispo.size}")
 
                 // puxando a fkServidor
-                val ServidorOpcao = JOptionPane.showInputDialog("Escolha um ID:").toInt()
+                println("Escolha um ID:")
+                val ServidorOpcao = scanner.nextLine().toInt()
+
+
                 fkServidor = ServidorOpcao
 
-                showMessageDialog(
-                    null, """
+                println(
+                     """
                     Seu monitoramento está rodando
                            Verifique seu Banco!!!
                     """.trimIndent()
