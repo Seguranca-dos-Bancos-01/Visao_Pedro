@@ -230,15 +230,13 @@ while True:
  """.trimIndent()
         val nomeArquivo = "IndividualPedroRede.py"
 
-        try {
+
             File(nomeArquivo).writeText(codigo) // Escrever o código Python em um arquivo
             val pythonPath = "/usr/bin/python3" // Example path, replace with your Python executable path
             Runtime.getRuntime().exec("sudo su").waitFor()
             val process = Runtime.getRuntime().exec("$pythonPath $nomeArquivo")
             process.waitFor() // Aguardar a execução terminar
             println("Execução concluída.")
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
+
     }
 }
