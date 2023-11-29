@@ -4,7 +4,7 @@ import datetime
 import time
 import psutil
 from mysql.connector import connect
-import pyodbc
+import pymssql
 
 # Função para obter a conexão com o banco de dados
 def mysql_connection(host, user, passwd, database=None):
@@ -16,10 +16,8 @@ def mysql_connection(host, user, passwd, database=None):
     )
     return connection
 
-def sql_server_connection(server, database, username, password):
-    conn_str = f'DRIVER={{SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
-    connection = pyodbc.connect(conn_str)
-    return connection
+pymssql.connect(server='34.206.192.7', database='SecurityBank', user='root', password='urubu100')
+
 
 
 
@@ -95,7 +93,7 @@ while True:
     '''
     queryServer = '''
         INSERT INTO Rede(ip, status, PotenciaUpload, PotenciaDownload, Ping, dtHora, fkServidor, fkBanco, fkEspecificacoes, fkPlano)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
     '''
 
 
