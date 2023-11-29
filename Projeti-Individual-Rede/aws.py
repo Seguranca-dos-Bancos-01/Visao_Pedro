@@ -16,7 +16,7 @@ def mysql_connection(host, user, passwd, database=None):
     )
     return connection
 
-pymssql.connect(server='34.206.192.7', database='SecurityBank', user='root', password='urubu100')
+pymssql.connect(server='34.206.192.7', database='SecurityBank', user='sa', password='UrubuDoGit123')
 
 
 
