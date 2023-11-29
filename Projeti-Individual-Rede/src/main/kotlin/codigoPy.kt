@@ -47,7 +47,7 @@ def mysql_connection(host, user, passwd, database=None):
 
 
 # Conectar ao banco de dados
-connection = mysql_connection('localhost', 'root', 'Pedroca12@', 'SecurityBank')
+connection = mysql_connection('localhost', 'root', 'urubu100', 'SecurityBank')
 
 sql_server_connection = pymssql.connect(server='34.206.192.7', database='SecurityBank', user='sa', password='UrubuDoGit123')
 
