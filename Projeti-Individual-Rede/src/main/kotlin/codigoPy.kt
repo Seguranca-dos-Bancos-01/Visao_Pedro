@@ -117,7 +117,7 @@ while True:
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
     '''
     queryServer = '''
-        INSERT INTO Rede(ip, status, PotenciaUpload, PotenciaDownload, Ping, dtHora, fkServidor, fkBanco, fkEspecificacoes, fkPlano)
+        INSERT INTO rede(ip, status, PotenciaUpload, PotenciaDownload, Ping, dtHora, fkServidor, fkBanco, fkEspecificacoes, fkPlano)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
     '''
 
