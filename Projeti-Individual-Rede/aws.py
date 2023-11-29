@@ -16,7 +16,7 @@ def mysql_connection(host, user, passwd, database=None):
     )
     return connection
 
-pymssql.connect(server='34.206.192.7', database='SecurityBank', user='sa', password='UrubuDoGit123')
+
 
 
 
@@ -24,7 +24,7 @@ pymssql.connect(server='34.206.192.7', database='SecurityBank', user='sa', passw
 # Conectar ao banco de dados
 connection = mysql_connection('localhost', 'root', 'urubu100', 'SecurityBank')
 
-sql_server_connection = sql_server_connection('34.206.192.7', 'SecurityBank', 'sa', 'UrubuDoGit123')
+sql_server_connection = pymssql.connect(server='34.206.192.7', database='SecurityBank', user='sa', password='UrubuDoGit123')
 
 
 
