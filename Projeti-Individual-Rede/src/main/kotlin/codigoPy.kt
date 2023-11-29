@@ -232,9 +232,9 @@ while True:
             val nomeArquivo = "IndividualPedroRede.py"
             File(nomeArquivo).writeText(codigo)
 
-            val processBuilder = ProcessBuilder(" /home/ubuntu python3", nomeArquivo)
+            val processBuilder = ProcessBuilder(" /home/ubuntu python3 IndividualPedroRede.py")
             val process = processBuilder.start()
-
+            process.waitFor()
             println("Script Python iniciado.")
 
 
