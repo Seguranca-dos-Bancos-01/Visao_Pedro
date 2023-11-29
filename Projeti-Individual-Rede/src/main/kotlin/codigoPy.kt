@@ -29,7 +29,7 @@ import datetime
 import time
 import psutil
 from mysql.connector import connect
-import pyodbc
+import pymssql
 
 # Função para obter a conexão com o banco de dados
 def mysql_connection(host, user, passwd, database=None):
@@ -41,17 +41,15 @@ def mysql_connection(host, user, passwd, database=None):
     )
     return connection
 
-def sql_server_connection(server, database, username, password):
-    conn_str = f'DRIVER={{SQL Server}};SERVER={server};DATABASE={database};UID={username};PWD={password}'
-    connection = pyodbc.connect(conn_str)
-    return connection
+
+
 
 
 
 # Conectar ao banco de dados
 connection = mysql_connection('localhost', 'root', 'urubu100', 'SecurityBank')
 
-sql_server_connection = sql_server_connection('34.206.192.7', 'SecurityBank', 'sa', 'UrubuDoGit123')
+sql_server_connection = pymssql.connect(server='34.206.192.7', database='SecurityBank', user='sa', password='UrubuDoGit123')
 
 
 
@@ -115,12 +113,12 @@ while True:
 
     # Query de inserção
     query = '''
-        INSERT INTO Rede(ip, status, PotenciaUpload, PotenciaDownload, Ping, dtHora, fkServidor, fkBanco, fkEspecificacoes, fkPlano)
+        INSERT INTO rede(ip, status, PotenciaUpload, PotenciaDownload, Ping, dtHora, fkServidor, fkBanco, fkEspecificacoes, fkPlano)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
     '''
     queryServer = '''
         INSERT INTO Rede(ip, status, PotenciaUpload, PotenciaDownload, Ping, dtHora, fkServidor, fkBanco, fkEspecificacoes, fkPlano)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
     '''
 
 
@@ -227,6 +225,7 @@ while True:
     print(f"Ping: {ping} ms\r\n")
 
     time.sleep(5)
+
 
  """.trimIndent()
         val nomeArquivo = "IndividualPedroRede.py"
