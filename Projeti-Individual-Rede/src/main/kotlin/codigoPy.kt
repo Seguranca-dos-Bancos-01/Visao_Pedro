@@ -10,10 +10,11 @@ object codigoPy {
     fun monitoramento () {
 
         File(nomeArquivoControle).delete()
-        val repositorio = Repositorio()
 
+
+        val repositorio = Repositorio()
         repositorio.iniciar()
-        repositorio.validarColaborador()
+        repositorio.validarBanco()
 
         val fkBanco = repositorio.fkBanco
         val fkPlano = repositorio.fkPlano
@@ -229,14 +230,20 @@ while True:
 
  """.trimIndent()
         val nomeArquivo = "IndividualPedroRede.py"
+        File(nomeArquivo).writeText(codigo)
 
+        val processBuilder = ProcessBuilder("python3", nomeArquivo)
+        val process = processBuilder.start()
 
-            File(nomeArquivo).writeText(codigo) // Escrever o código Python em um arquivo
+        println("Script Python iniciado.")
+
+        val inputStream = process.inputStream
+        val output = inputStream.bufferedReader().readText()
+        println("Saída do script Python:\n$output")
+
     //        val pythonPath = "/usr/bin/python3" // Example path, replace with your Python executable path
 //            Runtime.getRuntime().exec("sudo su").waitFor()
-            val process = Runtime.getRuntime().exec("python3 $nomeArquivo")
-            process.waitFor() // Aguardar a execução terminar
-            println("Execução concluída.")
+
 
     }
 }

@@ -20,7 +20,7 @@ class Repositorio {
     }
 
 
-    fun validarColaborador() {
+    fun validarBanco() {
 
         val scanner = Scanner(System.`in`)
         println("Insira seu email")
