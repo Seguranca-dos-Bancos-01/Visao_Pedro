@@ -21,7 +21,6 @@ object codigoPy {
         val fkServidor = repositorio.fkServidor
         val fkEspicificacao = repositorio.fkEspicificacao
 
-        while(true) {
 
             val codigo = """
 import speedtest
@@ -237,7 +236,7 @@ while True:
             println("Script Python iniciado.")
 
 
-        }
+
 
     }
 }
