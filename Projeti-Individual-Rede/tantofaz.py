@@ -1,28 +1,3 @@
-import java.io.File
-import java.io.IOException
-
-
-object codigoPy {
-
-    private const val nomeArquivoControle = "stop.txt"
-    private const val nomeArquivoPython = "IndividualPedroRede.py"
-
-    fun monitoramento () {
-
-        File(nomeArquivoControle).delete()
-
-
-        val repositorio = Repositorio()
-        repositorio.iniciar()
-        repositorio.validarBanco()
-
-        val fkBanco = repositorio.fkBanco
-        val fkPlano = repositorio.fkPlano
-        val fkServidor = repositorio.fkServidor
-        val fkEspicificacao = repositorio.fkEspicificacao
-
-
-        val codigo = """
 import speedtest
 import socket
 import datetime
@@ -126,7 +101,7 @@ while True:
 
 
     # Valores para inserção
-    insert_values = (network_ip, status, upload, download, ping, current_time, $fkServidor, $fkBanco, $fkEspicificacao, $fkPlano)
+    insert_values = (network_ip, status, upload, download, ping, current_time, 2, 1, 1, 1)
     
     insert_values_sql_server = (network_ip, status, upload, download, ping, current_time, $fkServidor, $fkBanco, $fkEspicificacao, $fkPlano)
     insert_data(sql_server_connection, queryServer, insert_values_sql_server)
@@ -227,23 +202,3 @@ while True:
     print(f"Ping: {ping} ms\r\n")
 
     time.sleep(5)
-
- """.trimIndent()
-        val nomeArquivo = "IndividualPedroRede.py"
-        File(nomeArquivo).writeText(codigo)
-
-        val processBuilder = ProcessBuilder("py", nomeArquivo)
-        val process = processBuilder.start()
-
-        println("Script Python iniciado.")
-
-        val inputStream = process.inputStream
-        val output = inputStream.bufferedReader().readText()
-        println("Saída do script Python:\n$output")
-
-    //        val pythonPath = "/usr/bin/python3" // Example path, replace with your Python executable path
-//            Runtime.getRuntime().exec("sudo su").waitFor()
-
-
-    }
-}
