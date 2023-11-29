@@ -24,7 +24,7 @@ def sql_server_connection(server, database, username, password):
 
 
 # Conectar ao banco de dados
-connection = mysql_connection('localhost', 'root', 'Pedroca12@', 'SecurityBank')
+connection = mysql_connection('localhost', 'root', 'urubu100', 'SecurityBank')
 
 sql_server_connection = sql_server_connection('34.206.192.7', 'SecurityBank', 'sa', 'UrubuDoGit123')
 
@@ -101,9 +101,9 @@ while True:
 
 
     # Valores para inserção
-    insert_values = (network_ip, status, upload, download, ping, current_time, 1, 1, 1, 1)
+    insert_values = (network_ip, status, upload, download, ping, current_time, 2, 1, 1, 1)
     
-    insert_values_sql_server = (network_ip, status, upload, download, ping, current_time, 1, 1, 1, 1)
+    insert_values_sql_server = (network_ip, status, upload, download, ping, current_time, 2, 1, 1, 1)
     insert_data(sql_server_connection, queryServer, insert_values_sql_server)
     
     # Criar cursor
