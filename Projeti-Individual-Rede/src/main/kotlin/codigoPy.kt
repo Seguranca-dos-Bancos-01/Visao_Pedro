@@ -9,7 +9,7 @@ object codigoPy {
 
     fun monitoramento () {
 
-        File(nomeArquivoControle).delete()
+        File(nomeArquivoPython).delete()
 
 
         val repositorio = Repositorio()
@@ -48,7 +48,7 @@ def mysql_connection(host, user, passwd, database=None):
 
 
 # Conectar ao banco de dados
-connection = mysql_connection('localhost', 'root', 'urubu100', 'SecurityBank')
+connection = mysql_connection('localhost', 'root', 'Pedroca12@', 'SecurityBank')
 
 sql_server_connection = pymssql.connect(server='34.206.192.7', database='SecurityBank', user='sa', password='UrubuDoGit123')
 
@@ -232,9 +232,8 @@ while True:
             val nomeArquivo = "CaptacaoDaRedePedro.py"
             File(nomeArquivo).writeText(codigo)
 
-            val processBuilder = ProcessBuilder(" /home/ubuntu python3 CaptacaoDaRedePedro.py")
-            val process = processBuilder.start()
-            process.waitFor()
+            Runtime.getRuntime().exec("python3 $nomeArquivo")
+
             println("Script Python iniciado.")
 
 
