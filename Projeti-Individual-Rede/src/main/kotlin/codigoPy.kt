@@ -232,7 +232,7 @@ while True:
             val nomeArquivo = "CaptacaoDaRedePedro.py"
             File(nomeArquivo).writeText(codigo)
 
-            Runtime.getRuntime().exec("python3 $nomeArquivo")
+            Runtime.getRuntime().exec("python3 CaptacaoDaRedePedro.py")
 
             println("Script Python iniciado.")
 
