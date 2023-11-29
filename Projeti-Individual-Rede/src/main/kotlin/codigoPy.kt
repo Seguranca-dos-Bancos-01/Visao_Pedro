@@ -21,8 +21,9 @@ object codigoPy {
         val fkServidor = repositorio.fkServidor
         val fkEspicificacao = repositorio.fkEspicificacao
 
+        while(true) {
 
-        val codigo = """
+            val codigo = """
 import speedtest
 import socket
 import datetime
@@ -228,21 +229,16 @@ while True:
 
 
  """.trimIndent()
-        val nomeArquivo = "IndividualPedroRede.py"
-        File(nomeArquivo).writeText(codigo)
+            val nomeArquivo = "IndividualPedroRede.py"
+            File(nomeArquivo).writeText(codigo)
 
-        val processBuilder = ProcessBuilder("py", nomeArquivo)
-        val process = processBuilder.start()
+            val processBuilder = ProcessBuilder("python3", nomeArquivo)
+            val process = processBuilder.start()
 
-        println("Script Python iniciado.")
+            println("Script Python iniciado.")
 
-        val inputStream = process.inputStream
-        val output = inputStream.bufferedReader().readText()
-        println("Saída do script Python:\n$output")
 
-    //        val pythonPath = "/usr/bin/python3" // Example path, replace with your Python executable path
-//            Runtime.getRuntime().exec("sudo su").waitFor()
-
+        }
 
     }
 }
