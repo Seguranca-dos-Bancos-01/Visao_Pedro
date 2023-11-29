@@ -22,7 +22,7 @@ def mysql_connection(host, user, passwd, database=None):
 
 
 # Conectar ao banco de dados
-connection = mysql_connection('localhost', 'root', 'urubu100', 'SecurityBank')
+connection = mysql_connection('localhost', 'root', 'Pedroca12@', 'SecurityBank')
 
 sql_server_connection = pymssql.connect(server='34.206.192.7', database='SecurityBank', user='sa', password='UrubuDoGit123')
 
@@ -34,7 +34,7 @@ print("\nIniciando Seu Monitoramento...\r\n")
 
 
 def insert_data(connection, query, values):
-    cursor = connection.cursor()
+    cursor = sql_server_connection.cursor()
     cursor.execute(query, values)
     connection.commit()
 
@@ -122,7 +122,7 @@ while True:
 
         alert_queryAWS = '''
             INSERT INTO alertaRede(componente, data, hora, status, fkRede)
-            VALUES (?,?, ?, ?, 45);
+            VALUES (%s, %s, %s, %s, 45);
         '''
         alert_valuesAWS = ('Ping', datetime.datetime.now().strftime('%Y-%m-%d'), datetime.datetime.now().strftime('%H:%M:%S'), 'Ping Critico')
         
@@ -145,7 +145,7 @@ while True:
 
         alert_queryAWS = '''
             INSERT INTO alertaRede(componente, data, hora, status, fkRede)
-            VALUES (?, ?, ?, ?,45);
+            VALUES (%s, %s, %s, %s, 45);
         '''
 
         insert_data(sql_server_connection, alert_queryAWS, alert_values)
@@ -166,7 +166,7 @@ while True:
 
         alert_queryAWS = '''
             INSERT INTO alertaRede(componente, data, hora, status, fkRede)
-            VALUES (?, ?, ?, ?,45);
+            VALUES (%s, %s, %s, %s, 45);
         '''
         insert_data(sql_server_connection, alert_queryAWS, alert_values)
 
@@ -184,7 +184,7 @@ while True:
 
         alert_queryAWS = '''
             INSERT INTO alertaRede(componente, data, hora, status, fkRede)
-            VALUES (?, ?, ?, ?,45);
+            VALUES (%s, %s, %s, %s, 45);
         '''
 
 

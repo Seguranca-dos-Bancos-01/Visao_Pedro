@@ -60,7 +60,7 @@ print("\nIniciando Seu Monitoramento...\r\n")
 
 
 def insert_data(connection, query, values):
-    cursor = connection.cursor()
+    cursor = sql_server_connection.cursor()
     cursor.execute(query, values)
     connection.commit()
 
@@ -118,7 +118,7 @@ while True:
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
     '''
     queryServer = '''
-        INSERT INTO rede(ip, status, PotenciaUpload, PotenciaDownload, Ping, dtHora, fkServidor, fkBanco, fkEspecificacoes, fkPlano)
+        INSERT INTO Rede(ip, status, PotenciaUpload, PotenciaDownload, Ping, dtHora, fkServidor, fkBanco, fkEspecificacoes, fkPlano)
         VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s);
     '''
 
@@ -127,7 +127,7 @@ while True:
     # Valores para inserção
     insert_values = (network_ip, status, upload, download, ping, current_time, $fkServidor, $fkBanco, $fkEspicificacao, $fkPlano)
     
-    insert_values_sql_server = (network_ip, status, upload, download, ping, current_time, $fkServidor, $fkBanco, $fkEspicificacao, $fkPlano)
+    insert_values_sql_server = (network_ip, status, upload, download, ping, current_time,$fkServidor, $fkBanco, $fkEspicificacao, $fkPlano)
     insert_data(sql_server_connection, queryServer, insert_values_sql_server)
     
     # Criar cursor
@@ -148,7 +148,7 @@ while True:
 
         alert_queryAWS = '''
             INSERT INTO alertaRede(componente, data, hora, status, fkRede)
-            VALUES (?,?, ?, ?, 45);
+            VALUES (%s, %s, %s, %s, 45);
         '''
         alert_valuesAWS = ('Ping', datetime.datetime.now().strftime('%Y-%m-%d'), datetime.datetime.now().strftime('%H:%M:%S'), 'Ping Critico')
         
@@ -171,7 +171,7 @@ while True:
 
         alert_queryAWS = '''
             INSERT INTO alertaRede(componente, data, hora, status, fkRede)
-            VALUES (?, ?, ?, ?,45);
+            VALUES (%s, %s, %s, %s, 45);
         '''
 
         insert_data(sql_server_connection, alert_queryAWS, alert_values)
@@ -192,7 +192,7 @@ while True:
 
         alert_queryAWS = '''
             INSERT INTO alertaRede(componente, data, hora, status, fkRede)
-            VALUES (?, ?, ?, ?,45);
+            VALUES (%s, %s, %s, %s, 45);
         '''
         insert_data(sql_server_connection, alert_queryAWS, alert_values)
 
@@ -210,7 +210,7 @@ while True:
 
         alert_queryAWS = '''
             INSERT INTO alertaRede(componente, data, hora, status, fkRede)
-            VALUES (?, ?, ?, ?,45);
+            VALUES (%s, %s, %s, %s, 45);
         '''
 
 
