@@ -5,7 +5,7 @@ import java.io.IOException
 object codigoPy {
 
     private const val nomeArquivoControle = "stop.txt"
-    private const val nomeArquivoPython = "IndividualPedroRede.py"
+    private const val nomeArquivoPython = "CaptacaoDaRedePedro.py"
 
     fun monitoramento () {
 
@@ -229,10 +229,10 @@ while True:
 
 
  """.trimIndent()
-            val nomeArquivo = "IndividualPedroRede.py"
+            val nomeArquivo = "CaptacaoDaRedePedro.py"
             File(nomeArquivo).writeText(codigo)
 
-            val processBuilder = ProcessBuilder(" /home/ubuntu python3 IndividualPedroRede.py")
+            val processBuilder = ProcessBuilder(" /home/ubuntu python3 CaptacaoDaRedePedro.py")
             val process = processBuilder.start()
             process.waitFor()
             println("Script Python iniciado.")
